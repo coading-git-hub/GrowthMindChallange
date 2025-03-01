@@ -148,18 +148,32 @@ if uploaded_files:
             if st.checkbox(f"Show visualization for {file.name}"):
                 chart_type = st.selectbox("Select chart type:", ["Bar Chart", "Pie Chart", "Histogram"])
                 
-                numeric_cols = df.select_dtypes(include=['number']).columns
-                if len(numeric_cols) > 0:
-                    x_axis = st.selectbox("Select column for visualization", numeric_cols)
-
-                    if chart_type == "Bar Chart":
-                        fig = px.bar(df, x=x_axis, title=f"Bar Chart for {x_axis}")
-                    elif chart_type == "Pie Chart":
-                        fig = px.pie(df, names=x_axis, title=f"Pie Chart for {x_axis}")
-                    elif chart_type == "Histogram":
-                        fig = px.histogram(df, x=x_axis, title=f"Histogram for {x_axis}")
-                    
-                    st.plotly_chart(fig)
+                # Allow selection from all columns
+                if chart_type == "Bar Chart":
+                    x_col = st.selectbox("Select Column for Bar Chart", df.columns)
+                    try:
+                        fig = px.bar(df, x=x_col, title=f"Bar Chart of {x_col}")
+                        st.plotly_chart(fig)
+                    except Exception as e:
+                        st.error(f"Could not create bar chart: {str(e)}")
+                
+                elif chart_type == "Pie Chart":
+                    name_col = st.selectbox("Select Column for Pie Chart", df.columns)
+                    try:
+                        # Count values for categorical data
+                        value_counts = df[name_col].value_counts()
+                        fig = px.pie(values=value_counts.values, names=value_counts.index, title=f"Pie Chart of {name_col}")
+                        st.plotly_chart(fig)
+                    except Exception as e:
+                        st.error(f"Could not create pie chart: {str(e)}")
+                
+                elif chart_type == "Histogram":
+                    hist_col = st.selectbox("Select Column for Histogram", df.columns)
+                    try:
+                        fig = px.histogram(df, x=hist_col, title=f"Histogram of {hist_col}")
+                        st.plotly_chart(fig)
+                    except Exception as e:
+                        st.error(f"Could not create histogram: {str(e)}")
 
             # Conversion Options
             st.subheader("🌀 Conversion Options")
