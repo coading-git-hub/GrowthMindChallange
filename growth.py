@@ -3,6 +3,7 @@ import pandas as pd
 import os
 from io import BytesIO
 import json
+import plotly
 import plotly.express as px
 import google.generativeai as genai
 from streamlit_chat import message
