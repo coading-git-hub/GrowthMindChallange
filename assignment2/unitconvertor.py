@@ -74,17 +74,24 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # App title
-st.markdown('<div class="main-header">UnitConverters.net</div>', unsafe_allow_html=True)
-st.markdown('<h2 style="margin-bottom: 2rem;">Unit Converter Express Version</h2>', unsafe_allow_html=True)
+st.markdown('<div class="main-header">🔄 UnitConverters.net</div>', unsafe_allow_html=True)
+st.markdown('<h2 style="margin-bottom: 2rem;">Unit Converter Express Version ⚡</h2>', unsafe_allow_html=True)
 
 # Create tabs for different conversion categories
-categories = ["Length", "Temp", "Area", "Volume", "Weight", "Time"]
+categories = [
+    ("Length", "📏"), 
+    ("Temp", "🌡️"), 
+    ("Area", "📐"), 
+    ("Volume", "🧊"), 
+    ("Weight", "⚖️"), 
+    ("Time", "⏰")
+]
 cols = st.columns(len(categories))
 selected_category = st.session_state.get("selected_category", "Length")
 
-for i, category in enumerate(categories):
+for i, (category, emoji) in enumerate(categories):
     button_style = "background-color: #2e7d32; color: white;" if category == selected_category else "background-color: #e0e0e0; color: black;"
-    if cols[i].button(category, key=f"cat_{category}", use_container_width=True):
+    if cols[i].button(f"{emoji} {category}", key=f"cat_{category}", use_container_width=True):
         selected_category = category
         st.session_state["selected_category"] = category
 
@@ -221,55 +228,56 @@ to_unit = st.selectbox("To:", units, index=to_unit_index, key="to_unit")
 decimal_places = st.slider("Decimal places in result:", 0, 10, 6)
 
 # Calculate and display result
-if st.button("Convert", key="convert_button"):
+if st.button("Convert 🔄", key="convert_button"):
     result = convert_unit(amount, from_unit, to_unit, selected_category)
     if result is not None:
-        st.success(f"{amount} {from_unit} = {result:.{decimal_places}f} {to_unit}")
+        st.success(f"✨ {amount} {from_unit} = {result:.{decimal_places}f} {to_unit} ✨")
 
 st.markdown('</div>', unsafe_allow_html=True)
 
 # Common conversions section
-st.markdown('<h3>Common Conversions</h3>', unsafe_allow_html=True)
+st.markdown('<h3>🔥 Common Conversions</h3>', unsafe_allow_html=True)
 st.markdown('<div class="common-conversions">', unsafe_allow_html=True)
 
+# Update common conversions with emojis
 common_conversions = [
     # Length conversions
-    ("Meters to Feet", "Meters", "Feet", "Length"),
-    ("Feet to Meters", "Feet", "Meters", "Length"),
-    ("Centimeters to Inches", "Centimeters", "Inches", "Length"),
-    ("Inches to Centimeters", "Inches", "Centimeters", "Length"),
-    ("Kilometers to Miles", "Kilometers", "Miles", "Length"),
-    ("Miles to Kilometers", "Miles", "Kilometers", "Length"),
+    ("📏 Meters to Feet", "Meters", "Feet", "Length"),
+    ("📏 Feet to Meters", "Feet", "Meters", "Length"),
+    ("📏 Centimeters to Inches", "Centimeters", "Inches", "Length"),
+    ("📏 Inches to Centimeters", "Inches", "Centimeters", "Length"),
+    ("📏 Kilometers to Miles", "Kilometers", "Miles", "Length"),
+    ("📏 Miles to Kilometers", "Miles", "Kilometers", "Length"),
     
     # Weight conversions
-    ("kg to lbs", "Kilogram", "Pound", "Weight"),
-    ("lbs to kg", "Pound", "Kilogram", "Weight"),
-    ("g to oz", "Gram", "Ounce", "Weight"),
-    ("oz to g", "Ounce", "Gram", "Weight"),
+    ("⚖️ kg to lbs", "Kilogram", "Pound", "Weight"),
+    ("⚖️ lbs to kg", "Pound", "Kilogram", "Weight"),
+    ("⚖️ g to oz", "Gram", "Ounce", "Weight"),
+    ("⚖️ oz to g", "Ounce", "Gram", "Weight"),
     
     # Volume conversions
-    ("Liters to Gallons", "Liter", "Gallon (US)", "Volume"),
-    ("Gallons to Liters", "Gallon (US)", "Liter", "Volume"),
-    ("ml to fl oz", "Milliliter", "Fluid Ounce (US)", "Volume"),
-    ("fl oz to ml", "Fluid Ounce (US)", "Milliliter", "Volume"),
+    ("🧊 Liters to Gallons", "Liter", "Gallon (US)", "Volume"),
+    ("🧊 Gallons to Liters", "Gallon (US)", "Liter", "Volume"),
+    ("🧊 ml to fl oz", "Milliliter", "Fluid Ounce (US)", "Volume"),
+    ("🧊 fl oz to ml", "Fluid Ounce (US)", "Milliliter", "Volume"),
     
     # Area conversions
-    ("sq m to sq ft", "Square Meter", "Square Foot", "Area"),
-    ("sq ft to sq m", "Square Foot", "Square Meter", "Area"),
-    ("acres to hectares", "Acre", "Square Meter", "Area"),
-    ("hectares to acres", "Square Meter", "Acre", "Area"),
+    ("📐 sq m to sq ft", "Square Meter", "Square Foot", "Area"),
+    ("📐 sq ft to sq m", "Square Foot", "Square Meter", "Area"),
+    ("📐 acres to hectares", "Acre", "Square Meter", "Area"),
+    ("📐 hectares to acres", "Square Meter", "Acre", "Area"),
     
     # Temperature conversions
-    ("Celsius to Fahrenheit", "Celsius", "Fahrenheit", "Temp"),
-    ("Fahrenheit to Celsius", "Fahrenheit", "Celsius", "Temp"),
-    ("Celsius to Kelvin", "Celsius", "Kelvin", "Temp"),
-    ("Kelvin to Celsius", "Kelvin", "Celsius", "Temp"),
+    ("🌡️ Celsius to Fahrenheit", "Celsius", "Fahrenheit", "Temp"),
+    ("🌡️ Fahrenheit to Celsius", "Fahrenheit", "Celsius", "Temp"),
+    ("🌡️ Celsius to Kelvin", "Celsius", "Kelvin", "Temp"),
+    ("🌡️ Kelvin to Celsius", "Kelvin", "Celsius", "Temp"),
     
     # Time conversions
-    ("Hours to Minutes", "Hour", "Minute", "Time"),
-    ("Minutes to Hours", "Minute", "Hour", "Time"),
-    ("Days to Hours", "Day", "Hour", "Time"),
-    ("Hours to Days", "Hour", "Day", "Time")
+    ("⏰ Hours to Minutes", "Hour", "Minute", "Time"),
+    ("⏰ Minutes to Hours", "Minute", "Hour", "Time"),
+    ("⏰ Days to Hours", "Day", "Hour", "Time"),
+    ("⏰ Hours to Days", "Hour", "Day", "Time")
 ]
 
 # Create a grid layout for common conversions
@@ -294,6 +302,6 @@ st.markdown('</div>', unsafe_allow_html=True)
 # Footer
 st.markdown("""
 <div style="text-align: center; margin-top: 2rem; color: #666;">
-    © 2025 UnitConverters.net - A simple unit conversion tool
+    © 2025 UnitConverters.net 🚀 - A simple unit conversion tool
 </div>
 """, unsafe_allow_html=True)
