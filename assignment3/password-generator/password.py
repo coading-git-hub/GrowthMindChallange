@@ -2,7 +2,7 @@ import streamlit as st
 import random
 import string
 import re
-import pyperclip
+# import pyperclip
 
 def check_password_strength(password):
     score = 0
