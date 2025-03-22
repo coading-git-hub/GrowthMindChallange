@@ -1,0 +1,16 @@
+[
+    {
+        "title": "python crash course",
+        "author": "Eric Mattes",
+        "year": 2019,
+        "genre": "programming",
+        "read": false
+    },
+    {
+        "title": "Head First Python",
+        "author": "Paul Barry",
+        "year": 2010,
+        "genre": "programming",
+        "read": true
+    }
+]
